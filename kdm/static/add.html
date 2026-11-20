@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İndirme Ekle</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="page">
+  <div class="card" id="srcCard">
+    <h3>Kaynak</h3>
+    <div id="manualSrc">
+      <div class="muted small">Video sayfası, akış (m3u8/mpd) veya doğrudan dosya bağlantısı yapıştırın.</div>
+      <div class="row" style="margin-top:8px">
+        <input type="url" id="url" class="grow" placeholder="https://…">
+        <button class="primary" id="btnProbe">Analiz et</button>
+      </div>
+      <label class="check small"><input type="checkbox" id="toggleBatch"> Toplu ekle (her satıra bir bağlantı)</label>
+      <div id="batchBox" class="hidden">
+        <textarea id="batchUrls" placeholder="https://…&#10;https://…"></textarea>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="batchSubs" class="grow" placeholder="Altyazı dilleri (ör. tr,en) – boş bırakılabilir">
+          <button class="primary" id="btnBatch">Hepsini ekle</button>
+        </div>
+      </div>
+    </div>
+    <div id="captureSrc" class="hidden">
+      <div class="muted small" id="pageTitle"></div>
+      <label>Yakalanan medya</label>
+      <select id="source"></select>
+      <div class="muted small" style="margin-top:6px">İpucu: HLS/DASH “ana liste” genelde tüm kaliteleri ve altyazıları içerir.</div>
+    </div>
+  </div>
+
+  <div class="card hidden" id="loading"><span class="spinner"></span> &nbsp;Analiz ediliyor…</div>
+  <div class="error-box hidden" id="error"></div>
+
+  <div class="card hidden" id="resultCard">
+    <div class="row" style="align-items:flex-start">
+      <img id="thumb" class="thumb hidden" alt="">
+      <div class="grow">
+        <label style="margin-top:0" id="nameLabel">Dosya adı</label>
+        <input type="text" id="name">
+        <div class="muted small" id="metaInfo" style="margin-top:4px"></div>
+      </div>
+    </div>
+
+    <div id="playlistBox" class="hidden">
+      <label>Bölümler <span class="muted small" id="epCount"></span></label>
+      <div class="row small" style="margin-bottom:6px">
+        <button id="selAll">Tümünü seç</button><button id="selNone">Hiçbiri</button>
+      </div>
+      <div class="list" id="entries"></div>
+      <label>Klasör adı (dizi/liste için alt klasör)</label>
+      <input type="text" id="folderName">
+      <label>Altyazı dilleri</label>
+      <input type="text" id="plSubs" placeholder="ör. tr,en  ·  hepsi için: all  ·  boş = altyazı yok">
+    </div>
+
+    <div id="qualityBox">
+      <label>Kalite</label>
+      <select id="quality"></select>
+    </div>
+
+    <div id="audioBox" class="hidden">
+      <label>Ses dili</label>
+      <select id="audioSel"></select>
+    </div>
+
+    <div id="subsBox">
+      <label>Altyazılar</label>
+      <div class="list" id="subs"></div>
+      <div class="muted small" id="noSubs">Bu kaynakta altyazı bulunamadı.</div>
+      <div class="row" style="margin-top:8px">
+        <input type="url" id="subUrl" class="grow" placeholder="Altyazı bağlantısı ekle (.vtt / .srt) – isteğe bağlı">
+        <input type="text" id="subLang" style="width:80px" placeholder="dil">
+        <button id="btnAddSub">Ekle</button>
+      </div>
+      <label class="check"><input type="checkbox" id="embed"> Altyazıları videonun içine göm (MKV)</label>
+    </div>
+
+    <label>Kaydedilecek klasör</label>
+    <input type="text" id="outDir">
+
+    <div class="foot" style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+      <button id="btnCancel">Vazgeç</button>
+      <button class="primary" id="btnDownload">⬇ İndirmeyi Başlat</button>
+    </div>
+  </div>
+</div>
+<script src="/static/common.js"></script>
+<script src="/static/add.js"></script>
+</body>
+</html>

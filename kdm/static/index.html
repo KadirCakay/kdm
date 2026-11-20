@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDM İndirme Yöneticisi</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1><span>K</span>DM</h1>
+  <button class="primary" id="btnNew">+ Yeni İndirme</button>
+  <button id="btnPauseAll">⏸ Tümünü Duraklat</button>
+  <button id="btnResumeAll">▶ Tümünü Sürdür</button>
+  <button id="btnClear">Bitenleri Temizle</button>
+  <span class="spacer"></span>
+  <button id="btnFolder">📂 Klasör</button>
+  <button id="btnSettings">⚙ Ayarlar</button>
+</header>
+<div id="ffmpegWarn" class="banner hidden">
+  ⚠ <b>ffmpeg bulunamadı.</b> Akış (HLS/DASH) videolarında ses-video birleştirme ve altyazı dönüştürme için
+  ffmpeg gerekli. README'deki kurulum adımlarına bakın.
+</div>
+<div class="tabs" id="tabs">
+  <button data-f="all" class="active">Tümü</button>
+  <button data-f="running">İndiriliyor</button>
+  <button data-f="queued">Sırada</button>
+  <button data-f="paused">Duraklatılan</button>
+  <button data-f="completed">Tamamlanan</button>
+  <button data-f="error">Hatalı</button>
+</div>
+<div class="stats" id="stats"></div>
+<main id="list"></main>
+
+<div class="modal-bg hidden" id="settingsModal">
+  <div class="modal">
+    <h2>Ayarlar</h2>
+    <label>İndirme klasörü</label>
+    <input type="text" id="s_download_dir">
+    <div class="row">
+      <div class="grow"><label>Aynı anda indirme</label><input type="number" id="s_max_concurrent" min="1" max="16"></div>
+      <div class="grow"><label>Bağlantı / parça sayısı</label><input type="number" id="s_connections" min="1" max="32"></div>
+    </div>
+    <div class="row">
+      <div class="grow"><label>Hız sınırı (KB/s, 0 = sınırsız)</label><input type="number" id="s_speed_limit_kb" min="0"></div>
+      <div class="grow"><label>Altyazı biçimi</label>
+        <select id="s_subtitle_format">
+          <option value="srt">SRT (her oynatıcıda çalışır)</option>
+          <option value="vtt">VTT</option>
+          <option value="original">Orijinal</option>
+        </select></div>
+    </div>
+    <label class="check"><input type="checkbox" id="s_embed_subtitles"> Altyazıları varsayılan olarak videonun içine göm (MKV)</label>
+    <label>Elle eklenen bağlantılar için tarayıcı çerezleri</label>
+    <select id="s_cookies_from_browser">
+      <option value="">Kullanma</option>
+      <option value="chrome">Chrome</option><option value="edge">Edge</option>
+      <option value="firefox">Firefox</option><option value="brave">Brave</option>
+      <option value="opera">Opera</option><option value="vivaldi">Vivaldi</option>
+      <option value="chromium">Chromium</option><option value="safari">Safari</option>
+    </select>
+    <div class="muted small">Eklenti ile gönderilen indirmeler çerezleri zaten otomatik taşır; bu ayar yalnızca URL'yi elle yapıştırdığınızda kullanılır.</div>
+    <div class="foot">
+      <button data-close>Vazgeç</button>
+      <button class="primary" id="btnSaveSettings">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg hidden" id="logModal">
+  <div class="modal">
+    <h2>Görev günlüğü</h2>
+    <pre class="log" id="logBody"></pre>
+    <div class="foot"><button data-close>Kapat</button></div>
+  </div>
+</div>
+
+<div class="modal-bg hidden" id="deleteModal">
+  <div class="modal">
+    <h2>Görevi kaldır</h2>
+    <p id="deleteName" class="muted"></p>
+    <label class="check"><input type="checkbox" id="deleteFiles"> Diskteki dosyaları da sil</label>
+    <div class="foot">
+      <button data-close>Vazgeç</button>
+      <button class="primary" id="btnConfirmDelete">Kaldır</button>
+    </div>
+  </div>
+</div>
+<script src="/static/common.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

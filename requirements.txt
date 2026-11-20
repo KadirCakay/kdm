@@ -1,0 +1,5 @@
+aiohttp>=3.9
+requests>=2.31
+yt-dlp>=2024.10.0
+# BigBlueButton slides (SVG -> PNG)
+resvg-py>=0.2
